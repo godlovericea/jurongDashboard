@@ -2,7 +2,7 @@
     <div id="map">
         <div class="headerBox">
             <img src="../../src/assets/images/logo.png" alt="" />
-            <p class="title">全省5G产业生态在线系统</p>
+            <p class="title">句容市文旅大盘展示</p>
         </div>
         <div class="switchBox">
             <span class="switchTitle">卫星影像</span
@@ -23,7 +23,7 @@
                 <i :class="item.icon"></i>
                 <p class="name">{{ item.name }}</p>
             </div>
-            <div class="bottomNmaeBox">
+            <!-- <div class="bottomNmaeBox">
                 <el-button
                     size="small"
                     @click="goLogin"
@@ -36,9 +36,9 @@
                 <el-button v-if="comName" type="text" @click="logOut"
                     >退出</el-button
                 >
-            </div>
+            </div> -->
         </div>
-        <div class="leftBox">
+        <!-- <div class="leftBox">
             <div class="leftItemsBox">
                 <div class="leftheaderBox">
                     <p class="headerTitle">企业数量</p>
@@ -68,116 +68,6 @@
             </div>
             <div class="content">
                 <div class="btnGroups">
-                    <!-- <md-tabs @md-changed="getScenList" md-alignment="fixed">
-                        <md-tab class="movies" id="1" md-label="产品">
-                            <div class="cardBox" v-for="(item,index) in productList" :key="index">
-                                <div class="cardContent">
-                                    <p class="cardTitle">{{item.productName}}</p>
-                                    <p class="cardDetail">{{item.productIntroduce}}</p>
-                                    <el-button type="text" style="color:'#ffffff';text-align: right;" @click="showProductDetail(item)">查看更多>></el-button>
-                                </div>
-                            </div>
-                        </md-tab>
-                        <md-tab id="2" class="movies" md-label="项目">
-                            <div class="cardBox" v-for="(item,index) in projectList" :key="index">
-                                <div v-if="!adminFlag">
-                                    <div class="cardContent" v-if="item.isEncryption === 0">
-                                        <p class="cardTitle">{{item.projectName}}</p>
-                                        <p class="cardDetail">{{item.projectIntroduce}}</p>
-                                        <el-button type="text" style="color:'#ffffff';text-align: right;" @click="showProjectDetail(item)">查看更多>></el-button>
-                                    </div>
-                                    <div class="cardContent" v-if="item.isEncryption === 1">
-                                        <p class="cardTitle">{{item.projectName}}</p>
-                                        <p class="cardDetail">加密：{{item.encryptionCode}}</p>
-                                    </div>
-                                </div>
-                                <div v-if="adminFlag">
-                                    <div class="cardContent">
-                                        <p class="cardTitle">{{item.projectName}}</p>
-                                        <p class="cardDetail">{{item.projectIntroduce}}</p>
-                                        <el-button type="text" style="color:'#ffffff';text-align: right;" @click="showProjectDetail(item)">查看更多>></el-button>
-                                    </div>
-                                </div>
-                            </div>
-                        </md-tab>
-                        <md-tab id="3" class="movies" md-label="需求">
-                            <div class="cardBox" v-for="(item,index) in needList" :key="index">
-                                <div v-if="!adminFlag">
-                                    <div class="cardContent" v-if="item.isEncryption === 0">
-                                        <p class="cardTitle">{{item.demandName}}</p>
-                                        <p class="cardDetail">{{item.demandInfo}}</p>
-                                        <el-button type="text" style="color:'#ffffff';text-align: right;" @click="showProjectDetail(item)">查看更多>></el-button>
-                                    </div>
-                                    <div class="cardContent" v-if="item.isEncryption === 1">
-                                        <p class="cardTitle">{{item.demandName}}</p>
-                                        <p class="cardDetail">加密：{{item.encryptionCode}}</p>
-                                    </div>
-                                </div>
-                                <div v-if="adminFlag">
-                                    <div class="cardContent">
-                                        <p class="cardTitle">{{item.demandName}}</p>
-                                        <p class="cardDetail">{{item.demandIndo}}</p>
-                                        <el-button type="text" style="color:'#ffffff';text-align: right;" @click="showNeedDetail(item)">查看更多>></el-button>
-                                    </div>
-                                </div>
-                            </div>
-                        </md-tab>
-                    </md-tabs> -->
-                    <!-- <el-tabs v-model="activeName" @tab-click="handleClick" class="elementTabs">
-                        <el-tab-pane label="产品" name="1">
-                            <div class="cardBox" v-for="(item,index) in productList" :key="index">
-                                <div class="cardContent">
-                                    <p class="cardTitle">{{item.productName}}</p>
-                                    <p class="cardDetail">{{item.productIntroduce}}</p>
-                                    <el-button type="text" style="color:'#ffffff';text-align: right;" @click="showProductDetail(item)">查看更多>></el-button>
-                                </div>
-                            </div>
-                        </el-tab-pane>
-                        <el-tab-pane label="项目" name="2">
-                            <div class="cardBox" v-for="(item,index) in projectList" :key="index">
-                                <div v-if="!adminFlag">
-                                    <div class="cardContent" v-if="item.isEncryption === 0">
-                                        <p class="cardTitle">{{item.projectName}}</p>
-                                        <p class="cardDetail">{{item.projectIntroduce}}</p>
-                                        <el-button type="text" style="color:'#ffffff';text-align: right;" @click="showProjectDetail(item)">查看更多>></el-button>
-                                    </div>
-                                    <div class="cardContent" v-if="item.isEncryption === 1">
-                                        <p class="cardTitle">{{item.projectName}}</p>
-                                        <p class="cardDetail">加密：{{item.encryptionCode}}</p>
-                                    </div>
-                                </div>
-                                <div v-if="adminFlag">
-                                    <div class="cardContent">
-                                        <p class="cardTitle">{{item.projectName}}</p>
-                                        <p class="cardDetail">{{item.projectIntroduce}}</p>
-                                        <el-button type="text" style="color:'#ffffff';text-align: right;" @click="showProjectDetail(item)">查看更多>></el-button>
-                                    </div>
-                                </div>
-                            </div>
-                        </el-tab-pane>
-                        <el-tab-pane label="需求" name="3">
-                            <div class="cardBox" v-for="(item,index) in needList" :key="index">
-                                <div v-if="!adminFlag">
-                                    <div class="cardContent" v-if="item.isEncryption === 0">
-                                        <p class="cardTitle">{{item.demandName}}</p>
-                                        <p class="cardDetail">{{item.demandInfo}}</p>
-                                        <el-button type="text" style="color:'#ffffff';text-align: right;" @click="showProjectDetail(item)">查看更多>></el-button>
-                                    </div>
-                                    <div class="cardContent" v-if="item.isEncryption === 1">
-                                        <p class="cardTitle">{{item.demandName}}</p>
-                                        <p class="cardDetail">加密：{{item.encryptionCode}}</p>
-                                    </div>
-                                </div>
-                                <div v-if="adminFlag">
-                                    <div class="cardContent">
-                                        <p class="cardTitle">{{item.demandName}}</p>
-                                        <p class="cardDetail">{{item.demandIndo}}</p>
-                                        <el-button type="text" style="color:'#ffffff';text-align: right;" @click="showNeedDetail(item)">查看更多>></el-button>
-                                    </div>
-                                </div>
-                            </div>
-                        </el-tab-pane>
-                    </el-tabs> -->
                     <el-radio-group
                         v-model="activeName"
                         @change="changeActiveName"
@@ -274,7 +164,6 @@
                                     <p class="cardTitle">
                                         {{ item.demandName }}
                                     </p>
-                                    <!-- <p class="cardDetail">{{item.demandInfo}}</p> -->
                                     <span v-if="item.type === 1"
                                         >主营产品需求</span
                                     >
@@ -392,7 +281,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="sceanDetailDialog" v-if="sceanFlag">
             <div class="sceanDialogHeader">
                 <p class="dialogTitle">{{ sceanData.title }}</p>
@@ -560,23 +449,15 @@
 
 <script>
 // 万里
+import Vue from 'vue'
 import mapboxgl from "mapbox-gl"
 import echarts from "echarts"
 import axios from "axios"
-import enterpriseAll from "../fiveData/enterpriseAll.json"
-import enterprise from "../fiveData/enterprise.json"
-import jiangsusheng from "../cityJson/江苏省.json"
-import nanjingDis from "../cityJson/南京市.json"
+import jurong from '../fiveData/jurong.json'
 import fourData from '../roadJson/four.json'
+import PopupBox from './PopupBox'
 import {
-    listBaseInfoByStream,
-    listProductByStream,
-    getCompanyProject,
-    getProduct,
-    getScale,
-    getCompanyProjectDemand,
-    getCompanyProductDemand,
-    getCompanyOtherDemand,
+    listBaseInfo
 } from "@/api/home"
 
 export default {
@@ -588,17 +469,17 @@ export default {
             navBarList: [
                 {
                     id: 1,
-                    name: "上游产业链",
+                    name: "文化旅游",
                     icon: "iconfont icon-wangluo",
                 },
                 {
                     id: 2,
-                    name: "中游产业链",
+                    name: "农业示范",
                     icon: "iconfont icon-xinpian",
                 },
                 {
                     id: 3,
-                    name: "下游产业链",
+                    name: "康养中心",
                     icon: "iconfont icon-modular",
                 },
                 {
@@ -620,7 +501,7 @@ export default {
             radar: "",
             radarFlag: false,
             elementsList: ["算法", "芯片", "终端", "系统", "平台"],
-            searchReault: {
+            culturalSearchReault: {
                 type: "FeatureCollection",
                 crs: {
                     type: "name",
@@ -628,7 +509,27 @@ export default {
                         name: "urn:ogc:def:crs:OGC:1.3:CRS84",
                     },
                 },
-                features: [],
+                features: []
+            },
+            hotelSearchReault: {
+                type: "FeatureCollection",
+                crs: {
+                    type: "name",
+                    properties: {
+                        name: "urn:ogc:def:crs:OGC:1.3:CRS84",
+                    },
+                },
+                features: []
+            },
+            nursingSearchReault: {
+                type: "FeatureCollection",
+                crs: {
+                    type: "name",
+                    properties: {
+                        name: "urn:ogc:def:crs:OGC:1.3:CRS84",
+                    },
+                },
+                features: []
             },
             cityList: [
                 {
@@ -726,17 +627,25 @@ export default {
             socket: '',
             websocket: '',
             hoveredStateId: null,
-            colorList:["#008000","#FFDEAD","#FF8C00","#FF4500","#800000"],
+            colorList:["#008000","#FF8C00","#D2691E","#FF4500","#800000"],
+            token: undefined,
+            sendFlag: false,
+            trafficFlow:{},
+            culturalTourismDTOList: [],
+            hotelDTOList: [],
+            nursingHomeDTOList: []
         }
+    },
+    components:{
+        PopupBox
     },
     mounted() {
         // this.initWebsocket()
         // this.handleWebsocket()
         this.checkBrowserVersion()
         this.initMap()
-        this.getEchartsData()
-        this.checkLogin()
-        this.getScenList()
+        // this.getEchartsData()
+        // this.getScenList()
     },
     methods: {
         checkBrowserVersion() {
@@ -750,17 +659,22 @@ export default {
             }
         },
         checkLogin() {
-            if (!sessionStorage.getItem("user")) {
-                this.adminFlag = false
-            } else {
-                this.adminFlag =
-                    JSON.parse(sessionStorage.getItem("user")).isAdmin === 1
-                        ? true
-                        : false
-                this.comName = JSON.parse(
-                    sessionStorage.getItem("user")
-                ).comName
-            }
+            console.log(this.map.getSource("xuefu")._data.features)
+            let featureData = this.map.getSource("xuefu")._data
+            featureData.features.forEach(el=>{
+                if(el.properties.status < 2.5) {
+                    el.properties.color = this.colorList[0]
+                } else if (el.properties.status < 4.5) {
+                    el.properties.color = this.colorList[1]
+                } else if (el.properties.status < 6.5) {
+                    el.properties.color = this.colorList[2]
+                } else if (el.properties.status < 8.5) {
+                    el.properties.color = this.colorList[3]
+                } else if (el.properties.status < 10.5) {
+                    el.properties.color = this.colorList[4]
+                }
+                this.map.getSource("xuefu").setData(featureData);
+            })
         },
         initMap() {
             mapboxgl.accessToken =
@@ -769,61 +683,119 @@ export default {
                 container: "map",
                 // style: "http://106.15.47.224:8688/styles/newblue/style.json",
                 style: "mapbox://styles/zplinze/ck2wvh2pa05ip1cr8supcaivg",
-                center: [118.70035238943387, 32.172209674476335],
-                zoom: 14.5,
+                center: [119.167135, 31.947355],
+                zoom: 10.5,
                 pitch: 60,
                 bearing: -0.03,
             })
-            // this.map.getSource('earthquakes').setData(enterpriseAll)
-            this.map.on("mouseenter", "xuefu", (e) => {
-                // console.log(e);
+            this.map.on("mouseenter", "cultural_label", (e) => {
+                console.log(e.features[0])
                 if (this.hoveredStateId) {
                     this.map.setFeatureState(
-                        { source: 'xuefu', id: this.hoveredStateId },
+                        { source: 'cultural', id: this.hoveredStateId },
                         { hover: false }
                         );
                     }
                     this.hoveredStateId = e.features[0].id;
                     this.map.setFeatureState(
-                        { source: 'xuefu', id: this.hoveredStateId },
+                        { source: 'cultural', id: this.hoveredStateId },
                         { hover: true }
                     );
-                let poptitle = e.features[0].properties.name
+                let poptitle = e.features[0].properties.city
+                const dom = document.createElement("div");
                 this.popup = new mapboxgl.Popup({
                     closeButton: false,
+                    maxWidth:'400px'
                 })
                     .setLngLat(e.lngLat)
-                    .setText(poptitle)
+                    .setDOMContent(dom)
                     .addTo(this.map)
+                    new Vue({
+                        render: h =>
+                        h(PopupBox, {
+                            props: {
+                                roadData: e.features[0].properties.comList
+                            }
+                        })
+                    }).$mount(dom);
             })
-            this.map.on("mouseleave", "xuefu", (e) => {
+            this.map.on("mouseleave", "cultural_label", (e) => {
+                this.popup.remove()
+            })
+            this.map.on("mouseenter", "hotel_label", (e) => {
+                console.log(e.features[0])
+                if (this.hoveredStateId) {
+                    this.map.setFeatureState(
+                        { source: 'hotel', id: this.hoveredStateId },
+                        { hover: false }
+                        );
+                    }
+                    this.hoveredStateId = e.features[0].id;
+                    this.map.setFeatureState(
+                        { source: 'hotel', id: this.hoveredStateId },
+                        { hover: true }
+                    );
+                let poptitle = e.features[0].properties.city
+                const dom = document.createElement("div");
+                this.popup = new mapboxgl.Popup({
+                    closeButton: false,
+                    maxWidth:'400px'
+                })
+                    .setLngLat(e.lngLat)
+                    .setDOMContent(dom)
+                    .addTo(this.map)
+                    new Vue({
+                        render: h =>
+                        h(PopupBox, {
+                            props: {
+                                roadData: e.features[0].properties.comList
+                            }
+                        })
+                    }).$mount(dom);
+            })
+            this.map.on("mouseleave", "hotel_label", (e) => {
+                this.popup.remove()
+            })
+            this.map.on("mouseenter", "nur_label", (e) => {
+                console.log(e.features[0])
+                if (this.hoveredStateId) {
+                    this.map.setFeatureState(
+                        { source: 'nursing', id: this.hoveredStateId },
+                        { hover: false }
+                        );
+                    }
+                    this.hoveredStateId = e.features[0].id;
+                    this.map.setFeatureState(
+                        { source: 'nursing', id: this.hoveredStateId },
+                        { hover: true }
+                    );
+                let poptitle = e.features[0].properties.city
+                const dom = document.createElement("div");
+                this.popup = new mapboxgl.Popup({
+                    closeButton: false,
+                    maxWidth:'400px'
+                })
+                    .setLngLat(e.lngLat)
+                    .setDOMContent(dom)
+                    .addTo(this.map)
+                    new Vue({
+                        render: h =>
+                        h(PopupBox, {
+                            props: {
+                                roadData: e.features[0].properties.comList
+                            }
+                        })
+                    }).$mount(dom);
+            })
+            this.map.on("mouseleave", "nur_label", (e) => {
                 this.popup.remove()
             })
             this.map.on("styledata", () => {
-                this.getPrivinceData(4)
                 this.handleXuefulu()
+                this.getCulturalJurongData()
+                this.getHotelData()
+                this.getNursingData()
             })
-        },
-        handleWebsocket(){
-            const wsuri = "ws://127.0.0.1:8080";
-            this.websocket = new WebSocket(wsuri);
-            this.websocket.onopen = this.websocketonopen;
-            this.websocket.onmessage = this.websocketonmessage;
-            this.websocket.onerror = this.websocketonerror;
-            this.websocket.onclose = this.websocketclose;
-        },
-        websocketonopen() {
-            const data = {}
-            this.websocket.send(JSON.stringify(data))
-        },
-        websocketonmessage(event){
-            console.log(event)
-        },
-        websocketonerror(){
-            this.handleWebsocket()
-        },
-        websocketclose(e){
-            console.log(e)
         },
         getEchartsData() {
             getScale().then((res) => {
@@ -843,115 +815,36 @@ export default {
         },
         getPrivinceData(id) {
             this.isClick = id
-            let myData = {
-                type: id,
-            }
-            //   console.log(myData);
-            listBaseInfoByStream(myData).then((res) => {
-                if (res.data.code === 200) {
-                    this.searchReault.features = res.data.result
-                    var mag1 = ["<", ["get", "mag"], 5]
-                    var mag2 = [
-                        "all",
-                        [">=", ["get", "mag"], 10],
-                        ["<", ["get", "mag"], 20],
-                    ]
-                    var mag3 = [
-                        "all",
-                        [">=", ["get", "mag"], 20],
-                        ["<", ["get", "mag"], 30],
-                    ]
-                    var mag4 = [
-                        "all",
-                        [">=", ["get", "mag"], 30],
-                        ["<", ["get", "mag"], 40],
-                    ]
-                    var mag5 = [">=", ["get", "mag"], 40]
-
-                    if (!this.map.getSource("earthquakes")) {
-                        this.map.addSource("earthquakes", {
-                            type: "geojson",
-                            data: this.searchReault,
-                            cluster: false,
-                            clusterRadius: 80,
-                            clusterProperties: {
-                                // keep separate counts for each magnitude category in a cluster
-                                mag1: ["+", ["case", mag1, 1, 0]],
-                                mag2: ["+", ["case", mag2, 1, 0]],
-                                mag3: ["+", ["case", mag3, 1, 0]],
-                                mag4: ["+", ["case", mag4, 1, 0]],
-                                mag5: ["+", ["case", mag5, 1, 0]],
-                            },
-                        })
-                    } else {
-                        this.map
-                            .getSource("earthquakes")
-                            .setData(this.searchReault)
-                    }
-
-                    if (!this.map.getLayer("earthquake_circle")) {
-                        this.map.addLayer({
-                            id: "earthquake_circle",
-                            type: "circle",
-                            source: "earthquakes",
-                            filter: ["!=", "cluster", true],
-                            paint: {
-                                "circle-color": [
-                                    "case",
-                                    mag1,
-                                    this.colors[0],
-                                    mag2,
-                                    this.colors[1],
-                                    mag3,
-                                    this.colors[2],
-                                    mag4,
-                                    this.colors[3],
-                                    this.colors[4],
-                                ],
-                                "circle-opacity": 0.6,
-                                "circle-radius": 20,
-                            },
-                        })
-                    }
-
-                    if (!this.map.getLayer("earthquake_label")) {
-                        this.map.addLayer({
-                            id: "earthquake_label",
-                            type: "symbol",
-                            source: "earthquakes",
-                            cluster: false,
-                            // "filter": ["!=", "cluster", true],
-
-                            layout: {
-                                "text-field": [
-                                    "number-format",
-                                    ["get", "mag"],
-                                    {
-                                        "min-fraction-digits": 0,
-                                        "max-fraction-digits": 1,
-                                    },
-                                ],
-                                "text-font": [
-                                    "Open Sans Semibold",
-                                    "Arial Unicode MS Bold",
-                                ],
-                                "text-size": 18,
-                                "text-allow-overlap": true,
-                            },
-                            paint: {
-                                // "text-color": ["case", ["<", ["get", "mag"], 3], "black", "white"]
-                                "text-color": "white",
-                            },
-                        })
-                        this.map.on(
-                            "click",
-                            "earthquake_label",
-                            this.handleMarkerClick
-                        )
-                    }
-                    this.getScenList()
+            console.log(this.isClick)
+            if (this.isClick === 4) {
+                if (this.map.getSource("cultural")) {
+                    let curdata = this.map.getSource("cultural")._data;
+                    this.map.getSource("cultural").setData(curdata);
                 }
-            })
+                if (this.map.getSource("hotel")) {
+                    let hoteldata = this.map.getSource("hotel")._data;
+                    this.map.getSource("hotel").setData(hoteldata);
+                }
+                if (this.map.getSource("nursing")) {
+                    let nurdata = this.map.getSource("nursing")._data;
+                    this.map.getSource("nursing").setData(nurdata);
+                }
+            } else if (this.isClick === 3){
+                if (this.map.getSource("nursing")) {
+                    let nurdata = this.map.getSource("nursing")._data;
+                    this.map.getSource("nursing").setData(nurdata);
+                }
+            } else if (this.isClick === 2) {
+                if (this.map.getSource("hotel")) {
+                    let hoteldata = this.map.getSource("hotel")._data;
+                    this.map.getSource("hotel").setData(hoteldata);
+                }
+            } else {
+                if (this.map.getSource("cultural")) {
+                    let curdata = this.map.getSource("cultural")._data;
+                    this.map.getSource("cultural").setData(curdata);
+                }
+            }
         },
         // 获取柱状图
         getEnterpriseMode() {
@@ -1383,25 +1276,210 @@ export default {
             sessionStorage.clear()
             this.$router.go(0)
         },
+        getQixiaDistribute() {
+            const dottedLine = jiangsusheng
+            // console.log("123")
+            if (!this.map.getSource("dottedlines_label")) {
+                this.map.addSource("dottedlines_label", jiangsusheng)
+                // this.map.addSource('dottedlines_label_nj',nanjingDis);
+            } else {
+                return false
+            }
+
+            // console.log("456")
+            // if (!this.map.getLayer('qixiaDis')){
+            this.map.addLayer({
+                id: "qixiaDis",
+                type: "fill",
+                source: "dottedlines_label",
+                paint: {
+                    "fill-color": "#ffffff",
+                    "fill-opacity": 0.05,
+                },
+            })
+            this.map.addLayer({
+                id: "qixiaDisline",
+                type: "line",
+                source: "dottedlines_label",
+                paint: {
+                    "line-dasharray": [3, 2],
+                    "line-width": 1.5,
+                    "line-opacity": 1,
+                    "line-color": "#ffffff",
+                },
+            })
+        },
         handleXuefulu(){
             if(this.map.getSource('xuefu')){
                 return false
             }
             this.map.addSource("xuefu", {
                 type: "geojson",
-                data: fourData
+                data: jurong
             })
             this.map.addLayer({
-                id: "xuefu",
+                id: "qixiaDis",
+                type: "fill",
+                source: "xuefu",
+                paint: {
+                    "fill-color": "#ffffff",
+                    "fill-opacity": 0.05,
+                },
+            })
+            this.map.addLayer({
+                id: "qixiaDisline",
                 type: "line",
                 source: "xuefu",
-                layout: {
-                    "line-join": "round",
-                    "line-cap": "round",
+                paint: {
+                    "line-dasharray": [3, 2],
+                    "line-width": 1.5,
+                    "line-opacity": 1,
+                    "line-color": "#ffffff",
                 },
-                'paint': {
-                    'line-color': ['get', 'color'],
-                    'line-width': 12
+            })
+
+            // this.checkLogin()
+        },
+        getCulturalJurongData(){
+            listBaseInfo()
+            .then((res) => {
+                this.culturalTourismDTOList = res.data.result.culturalTourismDTOList
+                this.culturalSearchReault.features = []
+
+                this.culturalTourismDTOList.forEach((el) => {
+                    this.culturalSearchReault.features.push({
+                        "type": "Feature",
+                        "id": el.culturalTourismId,
+                        "properties": {
+                            "id":el.culturalTourismId,
+                            "city": el.park,
+                            "mag": el.culturalTourismId,
+                            "time": el.createDate,
+                            "felt": el.address,
+                            "tsunami": 0,
+                            "comList": el
+                        },
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [parseFloat(el.lng), parseFloat(el.lat)]
+                        }
+                    })
+                })
+
+                if(this.map.getSource('cultural')){
+                    return false
+                }
+                this.map.addSource("cultural", {
+                    type: "geojson",
+                    data: this.culturalSearchReault
+                })
+                if (!this.map.getLayer("cultural_label")) {
+                    this.map.addLayer({
+                        id: "cultural_label",
+                        type: "circle",
+                        source: "cultural",
+                        filter: ["!=", "cluster", true],
+                        paint: {
+                            "circle-color": '#cd8d1f',
+                            "circle-opacity": 0.6,
+                            "circle-radius": 8,
+                        },
+                    })
+                }
+                this.map.getSource('cultural').setData(this.culturalSearchReault)
+            })
+        },
+        getHotelData() {
+            listBaseInfo()
+            .then((res) => {
+                this.hotelDTOList = res.data.result.hotelDTOList
+                this.hotelDTOList.features = []
+
+                this.hotelDTOList.forEach((el) => {
+                    this.hotelSearchReault.features.push({
+                        "type": "Feature",
+                        "id": el.hotelId,
+                        "properties": {
+                            "id":1,
+                            "city": el.name,
+                            "mag": el.hotelId,
+                            "time": el.createDate,
+                            "felt": el.address,
+                            "tsunami": el.beds,
+                            "comList": el
+                        },
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [parseFloat(el.lng), parseFloat(el.lat)]
+                        }
+                    })
+                })
+                if(this.map.getSource('hotel')){
+                    return false
+                }
+                this.map.addSource("hotel", {
+                    type: "geojson",
+                    data: this.hotelSearchReault
+                })
+                if (!this.map.getLayer("hotel_label")) {
+                    this.map.addLayer({
+                        id: "hotel_label",
+                        type: "circle",
+                        source: "hotel",
+                        filter: ["!=", "cluster", true],
+                        paint: {
+                            "circle-color": '#2d80de',
+                            "circle-opacity": 0.6,
+                            "circle-radius": 8,
+                        },
+                    })
+                }
+            })
+        },
+        getNursingData() {
+            listBaseInfo()
+            .then((res) => {
+                this.nursingHomeDTOList = res.data.result.nursingHomeDTOList
+                this.nursingSearchReault.features = []
+
+                this.nursingHomeDTOList.forEach((el) => {
+                    this.nursingSearchReault.features.push({
+                        "type": "Feature",
+                        "id": el.nursingHomeId,
+                        "properties": {
+                            "id":1,
+                            "city": el.name,
+                            "mag": el.nursingHomeId,
+                            "time": el.createDate,
+                            "felt": el.address,
+                            "tsunami": el.beds,
+                            "comList": el
+                        },
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [parseFloat(el.lng), parseFloat(el.lat)]
+                        }
+                    })
+                })
+                if(this.map.getSource('nursing')){
+                    return false
+                }
+                this.map.addSource("nursing", {
+                    type: "geojson",
+                    data: this.nursingSearchReault
+                })
+                if (!this.map.getLayer("nur_label")) {
+                    this.map.addLayer({
+                        id: "nur_label",
+                        type: "circle",
+                        source: "nursing",
+                        filter: ["!=", "cluster", true],
+                        paint: {
+                            "circle-color": '#009a83',
+                            "circle-opacity": 0.6,
+                            "circle-radius": 8,
+                        },
+                    })
                 }
             })
         }

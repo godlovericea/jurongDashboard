@@ -795,6 +795,7 @@ export default {
                 this.getCulturalJurongData()
                 this.getHotelData()
                 this.getNursingData()
+                this.getPrivinceData(4)
             })
         },
         getEchartsData() {
@@ -819,7 +820,8 @@ export default {
             if (this.isClick === 4) {
                 if (this.map.getSource("cultural")) {
                     let curdata = this.map.getSource("cultural")._data;
-                    this.map.getSource("cultural").setData(curdata);
+                    console.log(curdata)
+                    this.map.getSource("cultural").setData(this.culturalSearchReault);
                 }
                 if (this.map.getSource("hotel")) {
                     let hoteldata = this.map.getSource("hotel")._data;
@@ -1386,7 +1388,6 @@ export default {
                         },
                     })
                 }
-                this.map.getSource('cultural').setData(this.culturalSearchReault)
             })
         },
         getHotelData() {
