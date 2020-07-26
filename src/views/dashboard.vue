@@ -501,7 +501,7 @@ export default {
             radar: "",
             radarFlag: false,
             elementsList: ["算法", "芯片", "终端", "系统", "平台"],
-            searchReault: {
+            culturalSearchReault: {
                 type: "FeatureCollection",
                 crs: {
                     type: "name",
@@ -509,7 +509,27 @@ export default {
                         name: "urn:ogc:def:crs:OGC:1.3:CRS84",
                     },
                 },
-                features: [],
+                features: []
+            },
+            hotelSearchReault: {
+                type: "FeatureCollection",
+                crs: {
+                    type: "name",
+                    properties: {
+                        name: "urn:ogc:def:crs:OGC:1.3:CRS84",
+                    },
+                },
+                features: []
+            },
+            nursingSearchReault: {
+                type: "FeatureCollection",
+                crs: {
+                    type: "name",
+                    properties: {
+                        name: "urn:ogc:def:crs:OGC:1.3:CRS84",
+                    },
+                },
+                features: []
             },
             cityList: [
                 {
@@ -610,7 +630,10 @@ export default {
             colorList:["#008000","#FF8C00","#D2691E","#FF4500","#800000"],
             token: undefined,
             sendFlag: false,
-            trafficFlow:{}
+            trafficFlow:{},
+            culturalTourismDTOList: [],
+            hotelDTOList: [],
+            nursingHomeDTOList: []
         }
     },
     components:{
@@ -665,21 +688,20 @@ export default {
                 pitch: 60,
                 bearing: -0.03,
             })
-            // this.map.getSource('earthquakes').setData(enterpriseAll)
-            this.map.on("mouseenter", "xuefu", (e) => {
-                // console.log(e);
+            this.map.on("mouseenter", "cultural_label", (e) => {
+                console.log(e.features[0])
                 if (this.hoveredStateId) {
                     this.map.setFeatureState(
-                        { source: 'xuefu', id: this.hoveredStateId },
+                        { source: 'cultural', id: this.hoveredStateId },
                         { hover: false }
                         );
                     }
                     this.hoveredStateId = e.features[0].id;
                     this.map.setFeatureState(
-                        { source: 'xuefu', id: this.hoveredStateId },
+                        { source: 'cultural', id: this.hoveredStateId },
                         { hover: true }
                     );
-                let poptitle = e.features[0].properties.name
+                let poptitle = e.features[0].properties.city
                 const dom = document.createElement("div");
                 this.popup = new mapboxgl.Popup({
                     closeButton: false,
@@ -692,64 +714,88 @@ export default {
                         render: h =>
                         h(PopupBox, {
                             props: {
-                                roadData: this.trafficFlow
+                                roadData: e.features[0].properties.comList
                             }
                         })
                     }).$mount(dom);
             })
-            this.map.on("mouseleave", "xuefu", (e) => {
+            this.map.on("mouseleave", "cultural_label", (e) => {
+                this.popup.remove()
+            })
+            this.map.on("mouseenter", "hotel_label", (e) => {
+                console.log(e.features[0])
+                if (this.hoveredStateId) {
+                    this.map.setFeatureState(
+                        { source: 'hotel', id: this.hoveredStateId },
+                        { hover: false }
+                        );
+                    }
+                    this.hoveredStateId = e.features[0].id;
+                    this.map.setFeatureState(
+                        { source: 'hotel', id: this.hoveredStateId },
+                        { hover: true }
+                    );
+                let poptitle = e.features[0].properties.city
+                const dom = document.createElement("div");
+                this.popup = new mapboxgl.Popup({
+                    closeButton: false,
+                    maxWidth:'400px'
+                })
+                    .setLngLat(e.lngLat)
+                    .setDOMContent(dom)
+                    .addTo(this.map)
+                    new Vue({
+                        render: h =>
+                        h(PopupBox, {
+                            props: {
+                                roadData: e.features[0].properties.comList
+                            }
+                        })
+                    }).$mount(dom);
+            })
+            this.map.on("mouseleave", "hotel_label", (e) => {
+                this.popup.remove()
+            })
+            this.map.on("mouseenter", "nur_label", (e) => {
+                console.log(e.features[0])
+                if (this.hoveredStateId) {
+                    this.map.setFeatureState(
+                        { source: 'nursing', id: this.hoveredStateId },
+                        { hover: false }
+                        );
+                    }
+                    this.hoveredStateId = e.features[0].id;
+                    this.map.setFeatureState(
+                        { source: 'nursing', id: this.hoveredStateId },
+                        { hover: true }
+                    );
+                let poptitle = e.features[0].properties.city
+                const dom = document.createElement("div");
+                this.popup = new mapboxgl.Popup({
+                    closeButton: false,
+                    maxWidth:'400px'
+                })
+                    .setLngLat(e.lngLat)
+                    .setDOMContent(dom)
+                    .addTo(this.map)
+                    new Vue({
+                        render: h =>
+                        h(PopupBox, {
+                            props: {
+                                roadData: e.features[0].properties.comList
+                            }
+                        })
+                    }).$mount(dom);
+            })
+            this.map.on("mouseleave", "nur_label", (e) => {
                 this.popup.remove()
             })
             this.map.on("styledata", () => {
-                // this.getPrivinceData(4)
                 this.handleXuefulu()
-                this.getJurongData()
+                this.getCulturalJurongData()
+                this.getHotelData()
+                this.getNursingData()
             })
-        },
-        handleWebsocket(){
-            const wsuri = "ws://121.225.25.19:9191/smartlight_cms/webSocketServer/1679091c5a880faf6fb5e6087eb1b2dc"
-            this.websocket = new WebSocket(wsuri);
-            this.websocket.onopen = this.websocketonopen;
-            this.websocket.onmessage = this.websocketonmessage;
-            this.websocket.onerror = this.websocketonerror;
-            this.websocket.onclose = this.websocketclose;
-        },
-        websocketonopen() {
-            console.log("open")
-            if(!this.token){
-                const data1 = {
-                    commandType:1
-                }
-                this.websocket.send(JSON.stringify(data1))
-            }
-        },
-        websocketonmessage(event){
-            console.log(JSON.parse(event.data))
-            let eventData = JSON.parse(event.data)
-            if(eventData.status === 1){
-                this.websocketonopen()
-            }
-            this.token= eventData.token
-            if(eventData.trafficFlow){
-                this.trafficFlow = eventData.trafficFlow
-            }
-            if(!this.sendFlag){
-                const data2 = {
-                    commandType: 2,
-                    token:this.token,
-                    body:{
-                        szDeviceNo:'xyf-0000001' // 设备编号
-                    }
-                }
-                this.websocket.send(JSON.stringify(data2))
-                this.sendFlag = true
-            }
-        },
-        websocketonerror(){
-            // this.handleWebsocket()
-        },
-        websocketclose(e){
-            console.log(e)
         },
         getEchartsData() {
             getScale().then((res) => {
@@ -769,117 +815,36 @@ export default {
         },
         getPrivinceData(id) {
             this.isClick = id
-            let myData = {
-                type: id,
-            }
-            //   console.log(myData);
-            listBaseInfoByStream(myData).then((res) => {
-                console.log(res.data)
-                if (res.data.code === 200) {
-                    this.searchReault.features = res.data.result
-                    console.log(res.data.result)
-                    var mag1 = ["<", ["get", "mag"], 5]
-                    var mag2 = [
-                        "all",
-                        [">=", ["get", "mag"], 10],
-                        ["<", ["get", "mag"], 20],
-                    ]
-                    var mag3 = [
-                        "all",
-                        [">=", ["get", "mag"], 20],
-                        ["<", ["get", "mag"], 30],
-                    ]
-                    var mag4 = [
-                        "all",
-                        [">=", ["get", "mag"], 30],
-                        ["<", ["get", "mag"], 40],
-                    ]
-                    var mag5 = [">=", ["get", "mag"], 40]
-
-                    if (!this.map.getSource("earthquakes")) {
-                        this.map.addSource("earthquakes", {
-                            type: "geojson",
-                            data: this.searchReault,
-                            cluster: false,
-                            clusterRadius: 80,
-                            clusterProperties: {
-                                // keep separate counts for each magnitude category in a cluster
-                                mag1: ["+", ["case", mag1, 1, 0]],
-                                mag2: ["+", ["case", mag2, 1, 0]],
-                                mag3: ["+", ["case", mag3, 1, 0]],
-                                mag4: ["+", ["case", mag4, 1, 0]],
-                                mag5: ["+", ["case", mag5, 1, 0]],
-                            },
-                        })
-                    } else {
-                        this.map
-                            .getSource("earthquakes")
-                            .setData(this.searchReault)
-                    }
-
-                    if (!this.map.getLayer("earthquake_circle")) {
-                        this.map.addLayer({
-                            id: "earthquake_circle",
-                            type: "circle",
-                            source: "earthquakes",
-                            filter: ["!=", "cluster", true],
-                            paint: {
-                                "circle-color": [
-                                    "case",
-                                    mag1,
-                                    this.colors[0],
-                                    mag2,
-                                    this.colors[1],
-                                    mag3,
-                                    this.colors[2],
-                                    mag4,
-                                    this.colors[3],
-                                    this.colors[4],
-                                ],
-                                "circle-opacity": 0.6,
-                                "circle-radius": 20,
-                            },
-                        })
-                    }
-
-                    if (!this.map.getLayer("earthquake_label")) {
-                        this.map.addLayer({
-                            id: "earthquake_label",
-                            type: "symbol",
-                            source: "earthquakes",
-                            cluster: false,
-                            // "filter": ["!=", "cluster", true],
-
-                            layout: {
-                                "text-field": [
-                                    "number-format",
-                                    ["get", "mag"],
-                                    {
-                                        "min-fraction-digits": 0,
-                                        "max-fraction-digits": 1,
-                                    },
-                                ],
-                                "text-font": [
-                                    "Open Sans Semibold",
-                                    "Arial Unicode MS Bold",
-                                ],
-                                "text-size": 18,
-                                "text-allow-overlap": true,
-                            },
-                            paint: {
-                                // "text-color": ["case", ["<", ["get", "mag"], 3], "black", "white"]
-                                "text-color": "white",
-                            },
-                        })
-                        this.map.on(
-                            "click",
-                            "earthquake_label",
-                            this.handleMarkerClick
-                        )
-                    }
-                    this.getScenList()
+            console.log(this.isClick)
+            if (this.isClick === 4) {
+                if (this.map.getSource("cultural")) {
+                    let curdata = this.map.getSource("cultural")._data;
+                    this.map.getSource("cultural").setData(curdata);
                 }
-            })
+                if (this.map.getSource("hotel")) {
+                    let hoteldata = this.map.getSource("hotel")._data;
+                    this.map.getSource("hotel").setData(hoteldata);
+                }
+                if (this.map.getSource("nursing")) {
+                    let nurdata = this.map.getSource("nursing")._data;
+                    this.map.getSource("nursing").setData(nurdata);
+                }
+            } else if (this.isClick === 3){
+                if (this.map.getSource("nursing")) {
+                    let nurdata = this.map.getSource("nursing")._data;
+                    this.map.getSource("nursing").setData(nurdata);
+                }
+            } else if (this.isClick === 2) {
+                if (this.map.getSource("hotel")) {
+                    let hoteldata = this.map.getSource("hotel")._data;
+                    this.map.getSource("hotel").setData(hoteldata);
+                }
+            } else {
+                if (this.map.getSource("cultural")) {
+                    let curdata = this.map.getSource("cultural")._data;
+                    this.map.getSource("cultural").setData(curdata);
+                }
+            }
         },
         // 获取柱状图
         getEnterpriseMode() {
@@ -1343,27 +1308,6 @@ export default {
                     "line-color": "#ffffff",
                 },
             })
-            // this.map.addLayer({
-            //     'id': 'njDis',
-            //     'type': 'fill',
-            //     'source':'dottedlines_label_nj',
-            //     'paint': {
-            //         "fill-color":"#ffffff",
-            //         "fill-opacity":0.05,
-            //     }
-            // });
-            // this.map.addLayer({
-            //     'id': 'njDisline',
-            //     'type': 'line',
-            //     'source':'dottedlines_label_nj',
-            //     'paint': {
-            //         'line-dasharray':[3,2],
-            //         'line-width': 1.5,
-            //         "line-opacity":1,
-            //         'line-color': '#ffffff'
-            //     }
-            // });
-            // }
         },
         handleXuefulu(){
             if(this.map.getSource('xuefu')){
@@ -1396,10 +1340,147 @@ export default {
 
             // this.checkLogin()
         },
-        getJurongData(){
+        getCulturalJurongData(){
             listBaseInfo()
             .then((res) => {
-                this.searchReault.features.push
+                this.culturalTourismDTOList = res.data.result.culturalTourismDTOList
+                this.culturalSearchReault.features = []
+
+                this.culturalTourismDTOList.forEach((el) => {
+                    this.culturalSearchReault.features.push({
+                        "type": "Feature",
+                        "id": el.culturalTourismId,
+                        "properties": {
+                            "id":el.culturalTourismId,
+                            "city": el.park,
+                            "mag": el.culturalTourismId,
+                            "time": el.createDate,
+                            "felt": el.address,
+                            "tsunami": 0,
+                            "comList": el
+                        },
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [parseFloat(el.lng), parseFloat(el.lat)]
+                        }
+                    })
+                })
+
+                if(this.map.getSource('cultural')){
+                    return false
+                }
+                this.map.addSource("cultural", {
+                    type: "geojson",
+                    data: this.culturalSearchReault
+                })
+                if (!this.map.getLayer("cultural_label")) {
+                    this.map.addLayer({
+                        id: "cultural_label",
+                        type: "circle",
+                        source: "cultural",
+                        filter: ["!=", "cluster", true],
+                        paint: {
+                            "circle-color": '#cd8d1f',
+                            "circle-opacity": 0.6,
+                            "circle-radius": 8,
+                        },
+                    })
+                }
+                this.map.getSource('cultural').setData(this.culturalSearchReault)
+            })
+        },
+        getHotelData() {
+            listBaseInfo()
+            .then((res) => {
+                this.hotelDTOList = res.data.result.hotelDTOList
+                this.hotelDTOList.features = []
+
+                this.hotelDTOList.forEach((el) => {
+                    this.hotelSearchReault.features.push({
+                        "type": "Feature",
+                        "id": el.hotelId,
+                        "properties": {
+                            "id":1,
+                            "city": el.name,
+                            "mag": el.hotelId,
+                            "time": el.createDate,
+                            "felt": el.address,
+                            "tsunami": el.beds,
+                            "comList": el
+                        },
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [parseFloat(el.lng), parseFloat(el.lat)]
+                        }
+                    })
+                })
+                if(this.map.getSource('hotel')){
+                    return false
+                }
+                this.map.addSource("hotel", {
+                    type: "geojson",
+                    data: this.hotelSearchReault
+                })
+                if (!this.map.getLayer("hotel_label")) {
+                    this.map.addLayer({
+                        id: "hotel_label",
+                        type: "circle",
+                        source: "hotel",
+                        filter: ["!=", "cluster", true],
+                        paint: {
+                            "circle-color": '#2d80de',
+                            "circle-opacity": 0.6,
+                            "circle-radius": 8,
+                        },
+                    })
+                }
+            })
+        },
+        getNursingData() {
+            listBaseInfo()
+            .then((res) => {
+                this.nursingHomeDTOList = res.data.result.nursingHomeDTOList
+                this.nursingSearchReault.features = []
+
+                this.nursingHomeDTOList.forEach((el) => {
+                    this.nursingSearchReault.features.push({
+                        "type": "Feature",
+                        "id": el.nursingHomeId,
+                        "properties": {
+                            "id":1,
+                            "city": el.name,
+                            "mag": el.nursingHomeId,
+                            "time": el.createDate,
+                            "felt": el.address,
+                            "tsunami": el.beds,
+                            "comList": el
+                        },
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [parseFloat(el.lng), parseFloat(el.lat)]
+                        }
+                    })
+                })
+                if(this.map.getSource('nursing')){
+                    return false
+                }
+                this.map.addSource("nursing", {
+                    type: "geojson",
+                    data: this.nursingSearchReault
+                })
+                if (!this.map.getLayer("nur_label")) {
+                    this.map.addLayer({
+                        id: "nur_label",
+                        type: "circle",
+                        source: "nursing",
+                        filter: ["!=", "cluster", true],
+                        paint: {
+                            "circle-color": '#009a83',
+                            "circle-opacity": 0.6,
+                            "circle-radius": 8,
+                        },
+                    })
+                }
             })
         }
     },

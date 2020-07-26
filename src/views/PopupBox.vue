@@ -1,30 +1,70 @@
 <template>
     <div class="roadPopUpBox">
         <h3 class="title">{{info.szLocationName}}</h3>
-        <div class="contentBox">
+        <div class="contentBox" v-if="cultural">
             <div class="itemsBox">
-                <p>方向</p>
-                <p>{{info.szDirectionName}}</p>
+                <p>联系人</p>
+                <p class="valueBox">{{info.name}}</p>
             </div>
             <div class="itemsBox">
-                <p>设备名称</p>
-                <p>{{info.szDeviceName}}</p>
+                <p>电话</p>
+                <p class="valueBox">{{info.tel}}</p>
             </div>
             <div class="itemsBox">
-                <p>设备编号</p>
-                <p>{{info.szDeviceNo}}</p>
+                <p>星级</p>
+                <p class="valueBox">{{info.star}}</p>
             </div>
             <div class="itemsBox">
-                <p>设备IP</p>
-                <p>{{info.szDeviceIP}}</p>
+                <p>特色</p>
+                <p class="valueBox">{{info.particular}}</p>
             </div>
             <div class="itemsBox">
-                <p>起始时间</p>
-                <p>{{info.start}}</p>
+                <p>面积</p>
+                <p class="valueBox">{{info.area}}</p>
             </div>
             <div class="itemsBox">
-                <p>截止时间</p>
-                <p>{{info.end}}</p>
+                <p>地址</p>
+                <p class="valueBox">{{info.address}}</p>
+            </div>
+        </div>
+        <div class="contentBox" v-if="hotel">
+            <div class="itemsBox">
+                <p>房间数</p>
+                <p class="valueBox">{{info.rooms}} 间</p>
+            </div>
+            <div class="itemsBox">
+                <p>价钱</p>
+                <p class="valueBox">{{info.price}}</p>
+            </div>
+            <div class="itemsBox">
+                <p>地址</p>
+                <p class="valueBox">{{info.address}}</p>
+            </div>
+        </div>
+        <div class="contentBox" v-if="nursing">
+            <div class="itemsBox">
+                <p>性质</p>
+                <p class="valueBox">{{info.ecokind}}</p>
+            </div>
+            <div class="itemsBox">
+                <p>电话</p>
+                <p class="valueBox">{{info.tel}}</p>
+            </div>
+            <div class="itemsBox">
+                <p>价钱</p>
+                <p class="valueBox">{{info.price}}</p>
+            </div>
+            <div class="itemsBox">
+                <p>床位数</p>
+                <p class="valueBox">{{info.beds}}</p>
+            </div>
+            <div class="itemsBox">
+                <p>特色</p>
+                <p class="valueBox">{{info.particular}}</p>
+            </div>
+            <div class="itemsBox">
+                <p>地址</p>
+                <p class="valueBox">{{info.address}}</p>
             </div>
         </div>
     </div>
@@ -36,15 +76,27 @@ export default {
     data(){
         return{
             title: '学府路',
-            info:{}
+            info:{},
+            cultural:false,
+            hotel: false,
+            nursing: false
         }
     },
     props:['roadData'],
     mounted(){
         console.log(this.$props.roadData)
-        this.info = this.$props.roadData
-        this.info.start = moment(this.info.timeStart).format('YYYY-MM-DD hh:mm:ss')
-        this.info.end = moment(this.info.timeEnd).format('YYYY-MM-DD hh:mm:ss')
+        this.info = JSON.parse(this.$props.roadData)
+        if (this.info.star) {
+            this.cultural = true
+            this.info.szLocationName = '文化旅游'
+        } else if (this.info.hotelId) {
+            this.hotel = true
+            this.info.szLocationName = this.info.name
+        } else if (this.info.nursingHomeId) {
+            this.nursing = true
+            this.info.szLocationName = this.info.name
+        }
+
     }
 }
 </script>
@@ -63,14 +115,18 @@ export default {
     .contentBox{
         width: 100%;
     }
+    .itemsBox p {
+        margin: 5px 0;
+    }
     .itemsBox{
         display: flex;
         justify-content: space-between;
         align-items: center;
         font-size: 14px;
     }
-    .itemsBox p {
-        margin: 5px 0;
+    .itemsBox .valueBox {
+        width: 200px;
+        text-align: right;
     }
 </style>
 
