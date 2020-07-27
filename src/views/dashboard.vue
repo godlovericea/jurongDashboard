@@ -684,7 +684,7 @@ export default {
                 // style: "http://106.15.47.224:8688/styles/newblue/style.json",
                 style: "mapbox://styles/zplinze/ck2wvh2pa05ip1cr8supcaivg",
                 center: [119.186707, 31.86471],// "lng":"119.186707","lat":"31.86471"
-                zoom: 10.5,
+                zoom: 10.3,
                 pitch: 60,
                 bearing: -0.03,
             })
