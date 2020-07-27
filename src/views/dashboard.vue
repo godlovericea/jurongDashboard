@@ -683,7 +683,7 @@ export default {
                 container: "map",
                 // style: "http://106.15.47.224:8688/styles/newblue/style.json",
                 style: "mapbox://styles/zplinze/ck2wvh2pa05ip1cr8supcaivg",
-                center: [119.167135, 31.947355],
+                center: [119.186707, 31.86471],// "lng":"119.186707","lat":"31.86471"
                 zoom: 10.5,
                 pitch: 60,
                 bearing: -0.03,
@@ -795,7 +795,7 @@ export default {
                 this.getCulturalJurongData()
                 this.getHotelData()
                 this.getNursingData()
-                this.getPrivinceData(4)
+                this.getPrivinceData(this.isClick)
             })
         },
         getEchartsData() {
@@ -818,33 +818,147 @@ export default {
             this.isClick = id
             console.log(this.isClick)
             if (this.isClick === 4) {
-                if (this.map.getSource("cultural")) {
-                    let curdata = this.map.getSource("cultural")._data;
-                    console.log(curdata)
-                    this.map.getSource("cultural").setData(this.culturalSearchReault);
+                console.log(this.map.getSource('nursing'))
+                console.log(this.map.getSource('hotel'))
+                console.log(this.map.getSource('cultural'))
+                console.log(this.map.getLayer("nur_label"))
+                console.log(this.map.getLayer("hotel_label"))
+                console.log(this.map.getLayer("cultural_label"))
+                // if(!this.map.getSource('nursing')){
+                //     this.map.addSource("nursing", {
+                //         type: "geojson",
+                //         data: this.nursingSearchReault
+                //     })
+                // }
+                // if(!this.map.getSource('hotel')){
+                //     this.map.addSource("hotel", {
+                //         type: "geojson",
+                //         data: this.hotelSearchReault
+                //     })
+                // }
+                // if(!this.map.getSource('cultural')){
+                //     this.map.addSource("cultural", {
+                //         type: "geojson",
+                //         data: this.culturalSearchReault
+                //     })
+                // }
+                
+                if (!this.map.getLayer("nur_label")) {
+                    this.map.addLayer({
+                        id: "nur_label",
+                        type: "circle",
+                        source: "nursing",
+                        filter: ["!=", "cluster", true],
+                        paint: {
+                            "circle-color": '#009a83',
+                            "circle-opacity": 0.6,
+                            "circle-radius": 8,
+                        },
+                    })
                 }
-                if (this.map.getSource("hotel")) {
-                    let hoteldata = this.map.getSource("hotel")._data;
-                    this.map.getSource("hotel").setData(hoteldata);
+                if (!this.map.getLayer("hotel_label")) {
+                    this.map.addLayer({
+                        id: "hotel_label",
+                        type: "circle",
+                        source: "hotel",
+                        filter: ["!=", "cluster", true],
+                        paint: {
+                            "circle-color": '#2d80de',
+                            "circle-opacity": 0.6,
+                            "circle-radius": 8,
+                        },
+                    })
                 }
-                if (this.map.getSource("nursing")) {
-                    let nurdata = this.map.getSource("nursing")._data;
-                    this.map.getSource("nursing").setData(nurdata);
+                if (!this.map.getLayer("cultural_label")) {
+                    this.map.addLayer({
+                        id: "cultural_label",
+                        type: "circle",
+                        source: "cultural",
+                        filter: ["!=", "cluster", true],
+                        paint: {
+                            "circle-color": '#cd8d1f',
+                            "circle-opacity": 0.6,
+                            "circle-radius": 8,
+                        },
+                    })
                 }
             } else if (this.isClick === 3){
-                if (this.map.getSource("nursing")) {
-                    let nurdata = this.map.getSource("nursing")._data;
-                    this.map.getSource("nursing").setData(nurdata);
+                if(!this.map.getSource('nursing')){
+                    this.map.addSource("nursing", {
+                        type: "geojson",
+                        data: this.nursingSearchReault
+                    })
+                }
+                if (this.map.getLayer('hotel_label')) {
+                    this.map.removeLayer('hotel_label');
+                }
+                if (this.map.getLayer('cultural_label')) {
+                    this.map.removeLayer('cultural_label');
+                }
+                if (!this.map.getLayer("nur_label")) {
+                    this.map.addLayer({
+                        id: "nur_label",
+                        type: "circle",
+                        source: "nursing",
+                        filter: ["!=", "cluster", true],
+                        paint: {
+                            "circle-color": '#009a83',
+                            "circle-opacity": 0.6,
+                            "circle-radius": 8,
+                        },
+                    })
                 }
             } else if (this.isClick === 2) {
-                if (this.map.getSource("hotel")) {
-                    let hoteldata = this.map.getSource("hotel")._data;
-                    this.map.getSource("hotel").setData(hoteldata);
+                if(!this.map.getSource('hotel')){
+                    this.map.addSource("hotel", {
+                        type: "geojson",
+                        data: this.hotelSearchReault
+                    })
+                }
+                if (this.map.getLayer('nur_label')) {
+                    this.map.removeLayer('nur_label');
+                }
+                if (this.map.getLayer('cultural_label')) {
+                    this.map.removeLayer('cultural_label');
+                }
+                if (!this.map.getLayer("hotel_label")) {
+                    this.map.addLayer({
+                        id: "hotel_label",
+                        type: "circle",
+                        source: "hotel",
+                        filter: ["!=", "cluster", true],
+                        paint: {
+                            "circle-color": '#2d80de',
+                            "circle-opacity": 0.6,
+                            "circle-radius": 8,
+                        },
+                    })
                 }
             } else {
-                if (this.map.getSource("cultural")) {
-                    let curdata = this.map.getSource("cultural")._data;
-                    this.map.getSource("cultural").setData(curdata);
+                if(!this.map.getSource('cultural')){
+                    this.map.addSource("cultural", {
+                        type: "geojson",
+                        data: this.culturalSearchReault
+                    })
+                }
+                if (this.map.getLayer('nur_label')) {
+                    this.map.removeLayer('nur_label');
+                }
+                if (this.map.getLayer('hotel_label')) {
+                    this.map.removeLayer('hotel_label');
+                }
+                if (!this.map.getLayer("cultural_label")) {
+                    this.map.addLayer({
+                        id: "cultural_label",
+                        type: "circle",
+                        source: "cultural",
+                        filter: ["!=", "cluster", true],
+                        paint: {
+                            "circle-color": '#cd8d1f',
+                            "circle-opacity": 0.6,
+                            "circle-radius": 8,
+                        },
+                    })
                 }
             }
         },
