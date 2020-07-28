@@ -67,6 +67,9 @@
                 <p class="valueBox">{{info.address}}</p>
             </div>
         </div>
+        <div class="imgBox">
+            <img :src="info.imgUrl" alt="" class="imgs">
+        </div>
     </div>
 </template>
 
@@ -127,6 +130,13 @@ export default {
     .itemsBox .valueBox {
         width: 200px;
         text-align: right;
+    }
+    .imgBox{
+        width: 100%;
+    }
+    .imgs{
+        max-width: 100%;
+        max-height: 200px;
     }
 </style>
 
